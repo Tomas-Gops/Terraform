@@ -20,6 +20,10 @@ resource "docker_container" "nginx" {
     internal = 80
     external = var.external_port
   }
+  volumes {
+    host_path      = "${path.module}/nginx/default.conf"
+    container_path = "/etc/nginx/nginx.conf"
+  }
 }
 resource "docker_image" "echo" {
   name = "hashicorp/http-echo"
