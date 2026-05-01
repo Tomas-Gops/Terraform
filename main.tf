@@ -21,4 +21,17 @@ resource "docker_container" "nginx" {
     external = var.external_port
   }
 }
+resource "docker_image" "echo" {
+  name = "hashicorp/http-echo"
+}
+resource "docker_container" "echo" {
+  name  = "echo-test"
+  image = docker_image.echo.image_id
 
+  command = ["-text=hello from terraform"]
+
+  ports {
+    internal = 5678
+    external = 5678
+  }
+}
