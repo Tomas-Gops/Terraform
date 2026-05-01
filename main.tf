@@ -30,24 +30,32 @@ resource "docker_container" "nginx" {
     host_path = "/home/alex/Terraform/nginx/default.conf"
     container_path = "/etc/nginx/nginx.conf"
   }
+
 }
 
 resource "docker_image" "echo" {
   name = "hashicorp/http-echo"
 }
 
-resource "docker_container" "echo" {
-  name  = "echo-test"
+resource "docker_container" "echo-1" {
+  name  = "echo-1"
   image = docker_image.echo.image_id
 
-  command = ["-text=hello from terraform"]
+  command = ["-text=hello from echo-1"]
 
   networks_advanced {
     name = docker_network.app_network.name
   }
+}
 
-  ports {
-    internal = 5678
-    external = 5678
+resource "docker_container" "echo-2" {
+  name  = "echo-2"
+  image = docker_image.echo.image_id
+
+  command = ["-text=hello from echo-2"]
+
+  networks_advanced {
+    name = docker_network.app_network.name
   }
 }
+
