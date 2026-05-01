@@ -16,7 +16,7 @@ resource "docker_image" "nginx" {
 }
 
 resource "docker_container" "nginx" {
-  name  = "nginx-test"
+  name  = "nginx"
   image = docker_image.nginx.image_id
 
   networks_advanced {
@@ -28,7 +28,7 @@ resource "docker_container" "nginx" {
   }
   volumes {
     host_path = "/home/alex/Terraform/nginx/default.conf"
-    container_path = "/etc/nginx/nginx.conf"
+    container_path = "/etc/nginx/conf.d/conf_one.conf"
   }
 
 }
