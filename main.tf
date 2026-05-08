@@ -37,22 +37,12 @@ resource "docker_image" "echo" {
   name = "hashicorp/http-echo"
 }
 
-resource "docker_container" "echo-1" {
-  name  = "echo-1"
+resource "docker_container" "echo" {
+  count = var.backend_count
+  name  = "echo-${count.index}"
   image = docker_image.echo.image_id
 
-  command = ["-text=hello from echo-1"]
-
-  networks_advanced {
-    name = docker_network.app_network.name
-  }
-}
-
-resource "docker_container" "echo-2" {
-  name  = "echo-2"
-  image = docker_image.echo.image_id
-
-  command = ["-text=hello from echo-2"]
+  command = ["-text=hello from echo-${count.index}"]
 
   networks_advanced {
     name = docker_network.app_network.name

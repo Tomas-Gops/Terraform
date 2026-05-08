@@ -3,3 +3,9 @@ variable "external_port" {
   type        = number
   default     = 8080
 }
+
+variable "backend_count" {
+  description = "Number of backend containers"
+  type        = number
+  default     = 2
+}
